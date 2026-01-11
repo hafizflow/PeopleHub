@@ -1,7 +1,9 @@
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State private var users = [User]()
+    @Environment(\.modelContext) var modelContext
+    @Query var users: [User]
     
     var body: some View {
         NavigationStack {
@@ -21,16 +23,16 @@ struct ContentView: View {
             }
             .task {
                 if users.isEmpty {
-                    users = await fetchData()
+                     await fetchData()
                 }
             }
         }
     }
     
-    func fetchData() async -> [User] {
+    func fetchData() async {
         guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
             print("Invalid Url")
-            return []
+            return
         }
         
         do {
@@ -40,10 +42,13 @@ struct ContentView: View {
             decoder.dateDecodingStrategy = .iso8601
             let decodedData = try decoder.decode([User].self, from: data)
             
-            return decodedData
+            for user in decodedData {
+                modelContext.insert(user)
+            }
+            
+            try modelContext.save()
         } catch {
             print("Failed to fetch data")
-            return []
         }
         
     }
@@ -51,4 +56,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: User.self)
 }

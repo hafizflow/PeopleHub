@@ -20,6 +20,19 @@ struct DetailView: View {
                 InfoRow(title: "About", value: user.about)
                 InfoRow(title: "Registered", value: user.registered.formatted(date: .abbreviated, time: .shortened))
             }
+            
+            Section(header: StickyHeader(title: "Tags")) {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(user.tags, id: \.self) { tag in
+                            Tag(tag: tag)
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
+            }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
         }
         .listStyle(.plain)
         .navigationTitle(user.name)
@@ -37,7 +50,7 @@ struct StickyHeader: View {
                 .font(.title.bold())
                 .fontDesign(.rounded)
                 .padding(.horizontal)
-                .foregroundStyle(.black)
+                .foregroundStyle(.primary)
                 .glassEffect()
         }
         .transition(.move(edge: .top).combined(with: .opacity))
@@ -60,5 +73,17 @@ struct InfoRow: View {
                 .font(.body)
         }
         .padding(.vertical, 4)
+    }
+}
+
+
+struct Tag: View {
+    let tag: String
+    
+    var body: some View {
+        Text(tag)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
+            .glassEffect()
     }
 }
