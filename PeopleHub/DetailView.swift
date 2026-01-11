@@ -12,15 +12,6 @@ struct DetailView: View {
             }
             .listRowSeparator(.hidden)
             
-            Section(header: StickyHeader(title: "Personal Information")) {
-                InfoRow(title: "Age", value: "\(user.age)")
-                InfoRow(title: "Company", value: user.company)
-                InfoRow(title: "Email", value: user.email)
-                InfoRow(title: "Address", value: user.address)
-                InfoRow(title: "About", value: user.about)
-                InfoRow(title: "Registered", value: user.registered.formatted(date: .abbreviated, time: .shortened))
-            }
-            
             Section(header: StickyHeader(title: "Tags")) {
                 ScrollView(.horizontal) {
                     HStack {
@@ -33,6 +24,15 @@ struct DetailView: View {
             }
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            
+            Section(header: StickyHeader(title: "Personal Information")) {
+                InfoRow(title: "Age", value: "\(user.age)")
+                InfoRow(title: "Company", value: user.company)
+                InfoRow(title: "Email", value: user.email)
+                InfoRow(title: "Address", value: user.address)
+                InfoRow(title: "About", value: user.about)
+                InfoRow(title: "Registered", value: user.registered.formatted(date: .abbreviated, time: .shortened))
+            }
         }
         .listStyle(.plain)
         .navigationTitle(user.name)
@@ -83,7 +83,7 @@ struct Tag: View {
     var body: some View {
         Text(tag)
             .padding(.horizontal, 24)
-            .padding(.vertical, 16)
+            .padding(.vertical, 8)
             .glassEffect()
     }
 }

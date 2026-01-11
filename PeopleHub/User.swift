@@ -47,6 +47,7 @@ final class User: Decodable {
         let about = try container.decode(String.self, forKey: .about)
         let registered = try container.decode(Date.self, forKey: .registered)
         let tags = try container.decode([String].self, forKey: .tags)
+        
         self.init(id: id, name: name, friends: friends, isActive: isActive, age: age, address: address, company: company, email: email, about: about, registered: registered, tags: tags)
     }
 }
