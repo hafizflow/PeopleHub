@@ -17,4 +17,5 @@ struct User: Codable, Identifiable, Hashable {
     var company: String
     var email: String
     var about: String
+    var registered: Date
 }

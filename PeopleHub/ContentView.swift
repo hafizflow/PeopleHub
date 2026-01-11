@@ -35,7 +35,11 @@ struct ContentView: View {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            let decodedData = try JSONDecoder().decode([User].self, from: data)
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            let decodedData = try decoder.decode([User].self, from: data)
+            
             return decodedData
         } catch {
             print("Failed to fetch data")

@@ -18,6 +18,7 @@ struct DetailView: View {
                 InfoRow(title: "Email", value: user.email)
                 InfoRow(title: "Address", value: user.address)
                 InfoRow(title: "About", value: user.about)
+                InfoRow(title: "Registered", value: user.registered.formatted(date: .abbreviated, time: .shortened))
             }
         }
         .listStyle(.plain)
@@ -41,7 +42,6 @@ struct StickyHeader: View {
         }
         .transition(.move(edge: .top).combined(with: .opacity))
         .animation(.easeInOut(duration: 0.25), value: title)
-
     }
 }
 
@@ -62,9 +62,3 @@ struct InfoRow: View {
         .padding(.vertical, 4)
     }
 }
-
-
-#Preview {
-    DetailView(user: User(id: "hafiz", name: "hafiz", friends: [], isActive: false, age: 25, address: "hafiz", company: "non", email: "hafiz", about: "hafiz"))
-}
-
