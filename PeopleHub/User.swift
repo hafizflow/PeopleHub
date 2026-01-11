@@ -7,11 +7,14 @@
 
 import Foundation
 
-
-class User: Codable, Identifiable {
+struct User: Codable, Identifiable, Hashable {
+    var id: String
     var name: String
-    
-    init(name: String) {
-        self.name = name
-    }
+    var friends: [Friend]
+    var isActive: Bool
+    var age: Int
+    var address: String
+    var company: String
+    var email: String
+    var about: String
 }

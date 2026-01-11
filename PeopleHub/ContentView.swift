@@ -1,21 +1,29 @@
-//
-//  ContentView.swift
-//  PeopleHub
-//
-//  Created by Hafizur Rahman on 9/1/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     @State private var users = [User]()
     
     var body: some View {
-        List(users) { user in
-            Text(user.name)
-        }
-        .task {
-            users = await fetchData()
+        NavigationStack {
+            List(users) { user in
+                NavigationLink(value: user) {
+                    HStack(spacing: 16) {
+                        Text(user.isActive ? "🟢" : "🔴")
+                        Text(user.name)
+                    }
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("User")
+            .toolbarTitleDisplayMode(.inlineLarge)
+            .navigationDestination(for: User.self) { user in
+                DetailView(user: user)
+            }
+            .task {
+                if users.isEmpty {
+                    users = await fetchData()
+                }
+            }
         }
     }
     
